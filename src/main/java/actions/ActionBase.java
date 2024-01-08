@@ -92,7 +92,7 @@ public abstract class ActionBase {
     protected void forward(ForwardConst target) throws ServletException,IOException{
 
         //jspファイルの相対パスを作成(URLの一番最後にくっつく文字列)
-        String forward = String.format("/WEB-INF/views/%s.jsp",target.getValue()); //"%s"は文字列出力。自動で書き換えてくれる？
+        String forward = String.format("/WEB-INF/views/%s.jsp",target.getValue()); //"%s"は文字列出力。target.getValue()で取得した文字列を置換
         RequestDispatcher dispatcher = request.getRequestDispatcher(forward);
         //jspファイルの呼び出し
         dispatcher.forward(request, response);
