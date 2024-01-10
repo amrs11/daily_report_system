@@ -35,7 +35,7 @@ public abstract class ActionBase {
      * @param servletResponse
      */
 
-    public void init( //この初期化メソッドを各Actionクラスで呼び出す コンストラクタと同じ？？？
+    public void init(
             ServletContext servletContext,
             HttpServletRequest servletRequest,
             HttpServletResponse servletResponse) {
@@ -50,7 +50,6 @@ public abstract class ActionBase {
      * @throws IOException
      */
     public abstract void process() throws ServletException, IOException;
-    // throwsで例外クラスの宣言だけしてここにtry-catch文は書かない。呼び出し元で実行するよう記述する。
 
     /**
      * パラメータのcommandの値に該当するメソッドを実行する
