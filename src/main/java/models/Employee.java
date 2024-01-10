@@ -29,7 +29,7 @@ import lombok.Setter;
 @Table(name = JpaConst.TABLE_EMP)
 @NamedQueries({//全4つのSELECT文。指定した内容をDBから取得して一覧として表示される
     @NamedQuery(
-            name = JpaConst.Q_EMP_GET_ALL,//クエリの名前。コントローラーのほうで指定する用
+            name = JpaConst.Q_EMP_GET_ALL,//クエリの名前。コントローラーのほうでメソッド名として指定する用
             query = JpaConst.Q_EMP_GET_ALL_DEF),//クエリの実行内容。JPQL。
     @NamedQuery(
             name = JpaConst.Q_EMP_COUNT,
