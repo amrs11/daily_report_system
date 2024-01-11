@@ -50,9 +50,11 @@ public enum AttributeConst {
     REP_TITLE("title"),
     REP_CONTENT("content_msg");
 
+    // フィールドの定義
     private final String text;
     private final Integer i;
 
+    //引数ありコンストラクタ
     private AttributeConst(final String text) {
         this.text = text;
         this.i = null;

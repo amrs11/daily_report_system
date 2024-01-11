@@ -27,7 +27,7 @@ h1{
 
 h2{
     font-size:36px;
-    margin-botom:15px;
+    margin-bottom:15px;
 }
 
 li{
@@ -91,4 +91,8 @@ button{
     margin-bottom:15px;
     color:#721c24;
     background-color:#f8d7da;
+}
+
+select {
+    height: 30px;
 }
