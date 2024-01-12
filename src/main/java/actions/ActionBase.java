@@ -231,10 +231,10 @@ public abstract class ActionBase {
      * セッションスコープから指定された名前のパラメータを除去する
      * @param key パラメータ名
      */
-
     protected void removeSessionScope(AttributeConst key) {
         request.getSession().removeAttribute(key.getValue());
     }
+
     /**
      * アプリケーションスコープから指定されたパラメータの値を取得し、返却する
      * @param key パラメータ名
