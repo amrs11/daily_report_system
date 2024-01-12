@@ -16,11 +16,11 @@
     </div>
 </c:if>
 <label for="${AttributeConst.EMP_CODE.getValue()}">社員番号</label><br />
-<input type="text" name="${AttributeConst.EMP_CODE.getValue()}" id="${AttributeConst.EMP_CODE.getValue()}" value="${employee.code}">
+<input type="text" name="${AttributeConst.EMP_CODE.getValue()}" id="${AttributeConst.EMP_CODE.getValue()}" value="${employee.code}" />
 <br /><br />
 
 <label for="${AttributeConst.EMP_NAME.getValue()}">氏名</label><br />
-<input type="text" name="${AttirbuteConst.EMP_NAME.getValue()}" id="${AttirbuteConst.EMP_NAME.getValue()}" value="${employee.name}">
+<input type="text" name="${AttributeConst.EMP_NAME.getValue()}" id="${AttributeConst.EMP_NAME.getValue()}" value="${employee.name}" />
 <br /><br />
 
 <label for="${AttributeConst.EMP_PASS.getValue()}">パスワード</label><br />

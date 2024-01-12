@@ -238,9 +238,9 @@ public class EmployeeService extends ServiceBase {
      * @param ev 従業員データ
      * @return 登録結果(成功:true 失敗:false)
      */
-    private void create(EmployeeView ev) {
+    private void create(EmployeeView ev) {//Lesson2以来に出てきたメソッドのオーバーロード
 
-        em.getTransaction().begin();
+        em.getTransaction().begin();//継承元クラスServiceBaseでインスタンス化しているemが、DBのテーブルに情報を登録してくれる
         em.persist(EmployeeConverter.toModel(ev));
         em.getTransaction().commit();
 
