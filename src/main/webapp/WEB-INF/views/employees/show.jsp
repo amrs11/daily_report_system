@@ -6,8 +6,8 @@
 
 <%-- あとで使うURLのパス用にenumのConstから値をJSPの変数に代入(ページスコープ？？) --%>
 <c:set var="actEmp" value="${ForwardConst.ACT_EMP.getValue()}" />
-<c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />"
-<c:set var="commEdit" value="${Forwardconst.CMD_EDIT.getValue()}" />
+<c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
+<c:set var="commEdit" value="${ForwardConst.CMD_EDIT.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">

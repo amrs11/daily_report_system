@@ -19,7 +19,7 @@ import services.EmployeeService;
  */
 public class EmployeeAction extends ActionBase {
 
-    private EmployeeService service;
+    private EmployeeService service; // このクラスのメソッドで使用するEmployeeServiceのインスタンスを生成するため
 
     /**
      * メソッドを実行する
@@ -27,7 +27,7 @@ public class EmployeeAction extends ActionBase {
     @Override
     public void process() throws ServletException, IOException {
 
-        service = new EmployeeService();
+        service = new EmployeeService(); // serviceインスタンス(DBのレコードとやりとりする役/emが中身)を生成
 
         //メソッドを実行
         invoke();
@@ -139,7 +139,7 @@ public class EmployeeAction extends ActionBase {
          */
 
         public void show() throws ServletException, IOException {
-            //idを条件に従業員データを取得する
+            //idを条件に従業員データを取得する(em.find()→service.findInternal()→service.findOne()→リクエストパラメータから取得)
             EmployeeView ev = service.findOne(toNumber(getRequestParam(AttributeConst.EMP_ID)));
 
             if(ev == null || ev.getDeleteFlag() == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()) {
@@ -149,7 +149,7 @@ public class EmployeeAction extends ActionBase {
                 return;
             }
 
-            putRequestScope(AttributeConst.EMPLOYEE,ev);
+            putRequestScope(AttributeConst.EMPLOYEE,ev);//jspがをEL式でデータを取得できるように、evを"employee"にセットしてリクエストスコープに置く
 
             //詳細画面を表示
             forward(ForwardConst.FW_EMP_SHOW);
@@ -157,5 +157,30 @@ public class EmployeeAction extends ActionBase {
 
         }
 
+        /**
+         * 編集画面を表示する
+         * @throws ServletException
+         * @throws IOException
+         */
 
-}
+        public void edit() throws ServletException,IOException{
+            // idを条件に従業員データを取得する（）
+            EmployeeView ev = service.findOne(toNumber(getRequestParam(AttributeConst.EMP_ID)));
+
+            if(ev == null || ev.getDeleteFlag() == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()) {
+
+                //データが取得できなかった、または論理削除されている場合はエラー画面を表示
+                forward(ForwardConst.FW_ERR_UNKNOWN);
+                return; //ここでreturnを記述することで、if文がTRUEの場合は↓の処理は行われずメソッド終了になる
+            }
+
+                putRequestScope(AttributeConst.TOKEN,getTokenId()); //CSRF対策用トークBン
+                putRequestScope(AttributeConst.EMPLOYEE,ev); //取得した従業員情報
+
+                //編集画面を表示する
+                forward(ForwardConst.FW_EMP_EDIT);
+
+            }
+
+        }
+
