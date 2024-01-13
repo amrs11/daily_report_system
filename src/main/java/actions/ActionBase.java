@@ -214,9 +214,9 @@ public abstract class ActionBase {
      * @return パラメータの値
      */
     @SuppressWarnings("unchecked")
-        protected <R> R getSessionScope(AttributeConst key) {
-            return (R) request.getAttribute(key.getValue());
-        }
+    protected <R> R getSessionScope(AttributeConst key) {
+        return (R) request.getSession().getAttribute(key.getValue());
+    }
 
     /**
      * セッションスコープにパラメータを設定する
