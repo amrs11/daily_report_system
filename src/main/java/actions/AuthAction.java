@@ -78,7 +78,7 @@ public class AuthAction extends ActionBase{
 
                 //ログインした従業員のデータを取得
                 EmployeeView ev = service.findOne(code,plainPass,pepper);
-                //セッションにログインした従業員を設定(その人のセッションなので)
+                //セッションにログインした従業員を設定(その人のセッションなので)(セッションに居る間はログイン状態が維持される)
                 putSessionScope(AttributeConst.LOGIN_EMP,ev);
                 //セッションにログイン完了のフラッシュメッセージを設定
                 putSessionScope(AttributeConst.FLUSH,MessageConst.I_LOGINED.getMessage());
@@ -99,4 +99,22 @@ public class AuthAction extends ActionBase{
             forward(ForwardConst.FW_LOGIN);
             }
         }
+    /**
+     * ログアウト処理を行う
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void logout() throws ServletException,IOException{
+
+        //セッションからログイン従業員のパラメータを削除
+        removeSessionScope(AttributeConst.LOGIN_EMP);
+
+        //セッションにログアウト時のフラッシュメッセージを追加
+        putSessionScope(AttributeConst.FLUSH,MessageConst.I_LOGOUT.getMessage());
+
+        //ログイン画面にリダイレクト
+        redirect(ForwardConst.ACT_AUTH, ForwardConst.CMD_LOGIN);
+    }
+
+
     }
