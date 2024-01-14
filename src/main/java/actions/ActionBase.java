@@ -142,7 +142,7 @@ public abstract class ActionBase {
      */
 
     protected String getTokenId() {
-        return request.getSession().getId(); //Webサーバが割り当てるID（乱数で生成される）をServletでgetする
+        return request.getSession().getId(); //Webサーバが割り当てるID（乱数で生成される）をServletでgetしてセッションIDとして登録
     }
 
     /**

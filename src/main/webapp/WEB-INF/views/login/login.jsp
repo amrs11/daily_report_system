@@ -30,6 +30,7 @@
             <br /><br />
 
             <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}"/>
+            <%-- getTokenId()で取得したトークンを"token"にセット、リクエストスコープに置いてhiddenで渡す --%>
             <button type="submit">ログイン</button>
         </form>
     </c:param>

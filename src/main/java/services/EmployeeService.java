@@ -62,14 +62,14 @@ public class EmployeeService extends ServiceBase {
             // パスワードのハッシュ化
             String pass = EncryptUtil.getPasswordEncrypt(plainPass, pepper);
 
-            // 社員番号とハッシュ化済パスワードを条件に未削除の従業員を1件削除する
+            // 社員番号とハッシュ化済パスワードを条件に未削除の従業員を1件取得する
             e = em.createNamedQuery(JpaConst.Q_EMP_GET_BY_CODE_AND_PASS,Employee.class)
                     .setParameter(JpaConst.JPQL_PARM_CODE, code)
                     .setParameter(JpaConst.JPQL_PARM_PASSWORD,pass)
                     .getSingleResult();
         } catch (NoResultException ex){
         }
-        return EmployeeConverter.toView(e) ;
+        return EmployeeConverter.toView(e) ;//DBから取得した情報をEmployeeViewの型にコンバートして返却
         }
 
     /**
@@ -207,14 +207,14 @@ public class EmployeeService extends ServiceBase {
      */
     public Boolean validateLogin(String code, String plainPass, String pepper) {
 
-        boolean isValidEmployee = false;
-        if (code != null && !code.equals("") && plainPass != null && !plainPass.equals("")) {
-            EmployeeView ev = findOne(code, plainPass, pepper);
+        boolean isValidEmployee = false; //そもそもはfalseを返すようにする
+        if (code != null && !code.equals("") && plainPass != null && !plainPass.equals("")) {//フォームに入力値がなければ処理をここで終えてfalseを返す
+            EmployeeView ev = findOne(code, plainPass, pepper);//フォームの入力値を元にDBからデータを検索してevにセット
 
-            if (ev != null && ev.getId() != null) {
+            if (ev != null && ev.getId() != null) {//evの中身が空でない（引数と同じ内容のレコードを持った従業員がDBに存在する）か確認
 
                 //データが取得できた場合、認証成功
-                isValidEmployee = true;
+                isValidEmployee = true;//認証できたときにtrueを返すようにする
             }
         }
 
