@@ -113,7 +113,7 @@ public class AuthAction extends ActionBase{
         putSessionScope(AttributeConst.FLUSH,MessageConst.I_LOGOUT.getMessage());
 
         //ログイン画面にリダイレクト
-        redirect(ForwardConst.ACT_AUTH, ForwardConst.CMD_LOGIN);
+        redirect(ForwardConst.ACT_AUTH, ForwardConst.CMD_SHOW_LOGIN);
     }
 
 
