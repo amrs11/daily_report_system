@@ -28,7 +28,7 @@ public class ReportService extends ServiceBase{
      */
     public List<ReportView> getMinePerPage(EmployeeView employee, int page){
 
-        List<Report> reports = em.createNamedQuery(JpaConst.Q_EMP_GET_ALL, Report.class)
+        List<Report> reports = em.createNamedQuery(JpaConst.Q_REP_GET_ALL_MINE, Report.class)
                 .setParameter(JpaConst.JPQL_PARM_EMPLOYEE, EmployeeConverter.toModel(employee))
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))//DBの、日報のprimary key（id）の何番目から取得するか、というSQL文
                 .setMaxResults(JpaConst.ROW_PER_PAGE)//↑で指定したところから、最大何件まで取得するか、というSQL文
@@ -131,7 +131,7 @@ public class ReportService extends ServiceBase{
      * 日報データを1件登録する
      * @param rv 日報データ
      */
-    public void createInternal(ReportView rv) {
+    private void createInternal(ReportView rv) {
         em.getTransaction().begin();
         em.persist(ReportConverter.toModel(rv));//persist=永続化=DBにレコードとして保存
         em.getTransaction().commit();
@@ -142,7 +142,7 @@ public class ReportService extends ServiceBase{
      * 日報データを更新する
      * @param rv 日報データ
      */
-    public void updateInternal(ReportView rv) {
+    private void updateInternal(ReportView rv) {
         em.getTransaction().begin();
         Report r = findOneInternal(rv.getId());
         ReportConverter.copyViewToModel(r, rv);//rv(画面で入力した日報内容)をr（findOneInternalで取得した、DBの元々の日報に上書き）
