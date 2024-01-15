@@ -27,7 +27,7 @@ public class EmployeeView {
     private Integer id;
 
     /**
-     * 社員番号 //@Columnていうアノテーションが要らないんだね
+     * 社員番号 //@Columnていうアノテーションが要らない
      */
     private String code;
 
