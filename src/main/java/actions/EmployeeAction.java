@@ -94,11 +94,9 @@ public class EmployeeAction extends ActionBase {
 
     public void create() throws ServletException,IOException{
 
-        //管理者かどうかのチェック
-        if(checkAdmin()) {
 
-        // CSRF対策のTokenチェック
-        if(checkToken()) {
+        // 管理者かどうか&CSRF対策のTokenチェック
+        if(checkAdmin() && checkToken()){
 
             //パラメータの値（entryNewページで入力した情報）をもとに従業員情報のインスタンスを作成する
             EmployeeView ev = new EmployeeView( //引数ありコンストラクタを呼び出し(modelではLombokで自動生成されているやつ)
@@ -140,7 +138,6 @@ public class EmployeeAction extends ActionBase {
 
         }
         }
-    }
 
         /**
          * 詳細画面を表示する
@@ -209,12 +206,8 @@ public class EmployeeAction extends ActionBase {
          */
 
         public void update() throws ServletException,IOException{
-
-            //管理者かどうかのチェック
-            if(checkAdmin()) {
-
-            // CSRF対策 tokenのチェック
-            if(checkToken()) {
+            // 管理者かどうか＆CSRF対策 tokenのチェック
+            if(checkAdmin() && checkToken()) {
                 // パラメータの値を元に従業員情報のインスタンスを生成する
                 EmployeeView ev = new EmployeeView(//引数ありコンストラクタに値をセット
                         //_form.jspで、ボックスに入力された文字列を、それぞれnameで変数に入れているやつ
@@ -254,7 +247,6 @@ public class EmployeeAction extends ActionBase {
 
             }
             }
-        }
         /**
          * 論理削除を行う（実際にDBから消してしまわない）
          * @throws ServletException
@@ -262,11 +254,9 @@ public class EmployeeAction extends ActionBase {
          */
         public void destroy() throws ServletException,IOException{
 
-            //管理者かどうかのチェック
-            if(checkAdmin()) {
 
-            //CSRF対策 tokenのチェック
-            if(checkToken()) {
+            //管理者かどうか&CSRF対策 tokenのチェック
+            if(checkAdmin() && checkToken()) {
 
                 //idを条件に従業員データを論理削除
                 service.destroy(toNumber(getRequestParam(AttributeConst.EMP_ID)));
@@ -278,7 +268,6 @@ public class EmployeeAction extends ActionBase {
                 redirect(ForwardConst.ACT_EMP, ForwardConst.CMD_INDEX);
             }
             }
-        }
 
         /**
          * ログイン中の従業員が管理者かどうかチェックし、管理者でなければエラー画面を表示

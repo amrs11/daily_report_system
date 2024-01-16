@@ -89,7 +89,7 @@ public class AuthAction extends ActionBase{
             //認証失敗の場合
 
             //CSRF対策用トークンを設定
-            putSessionScope(AttributeConst.TOKEN, getTokenId());
+            putRequestScope(AttributeConst.TOKEN, getTokenId());
             //認証失敗エラーメッセージ表示フラグをたてる(login.jspに記述したif文でこの変数をうけとって、エラーメッセージが表示される)
             putRequestScope(AttributeConst.LOGIN_ERR, true);
             //入力された従業員コードを設定
