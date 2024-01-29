@@ -159,13 +159,25 @@ public class ReportAction extends ActionBase {
             } else {
 
                 putRequestScope(AttributeConst.REPORT,rv);//取得したデータをJSPに渡す
+            }
+            //とりあえずテスト用↓ 240125
+
+            //セッションからログイン中の従業員情報を取得（ログインメソッドで置いている）
+            EmployeeView loginEmployee = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
+
+            //ログイン中の従業員が作成した日報データの件数を取得
+            long myReportCount = service.countAllMine(loginEmployee);
+
+            putRequestScope(AttributeConst.REP_COUNT,myReportCount);//ログイン中の従業員が作成した日報の数
+
+            //ここまでテスト↑
 
                 //詳細画面を表示
                 forward(ForwardConst.FW_REP_SHOW);
 
             }
 
-        }
+
 
         /**
          * 編集画面を表示する

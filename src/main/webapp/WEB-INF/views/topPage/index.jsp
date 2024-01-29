@@ -12,6 +12,7 @@
 <c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
 
 <c:import url="../layout/app.jsp">
+
     <c:param name="content">
         <c:if test="${flush != null}">
             <div id="flush_success">
@@ -39,7 +40,6 @@
                 </c:forEach>
             </tbody>
         </table>
-
         <div id="pagination">
             （全 ${reports_count} 件）<br />
             <c:forEach var="i" begin="1" end="${((reports_count - 1) / maxRow) + 1}" step="1">

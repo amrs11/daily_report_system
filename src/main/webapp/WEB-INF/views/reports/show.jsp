@@ -41,10 +41,20 @@
         </table>
 
         <c:if test="${sessionScope.login_employee.id == report.employee.id}">
+            <i class="fa-regular fa-star fa-lg"></i><%-- とりあえずテスト用240125 --%>&nbsp;<c:out value="${reports_count}" />
+
          <p>
             <a href="<c:url value='?action=${actRep}&command=${commEdt}&id=${report.id}' />">この日報を編集する</a>
          </p>
          </c:if>
+                <div id="like_icon">
+         <c:if test="${sessionScope.login_employee.id != report.employee.id}">
+                 <form method="post" name="form1" action="?action=${actRep}&command=${commEdt}&id=${report.id}" >
+                         <input type="hidden" name="user_name" value="名前"><a href="javascript:form1.submit()"><i class="fa-solid fa-star fa-lg"></i></a>
+                 </form><c:out value="${reports_count}" />
+            <%-- とりあえずテスト用240125 --%>
+         </c:if>
+         </div>
 
          <p>
             <a href="<c:url value='?action=${actRep}&command=${commIdx}' />">一覧に戻る</a>

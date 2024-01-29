@@ -73,14 +73,35 @@ public class EmployeeService extends ServiceBase {
         }
 
     /**
-     * idを条件に取得したデータをEmployeeViewのインスタンスで返却する
+     * idを条件にentityクラスから取得したデータをEmployeeViewのインスタンスにコンバートして返却する
      * @param id
      * @return 取得データのインスタンス
      */
-    public EmployeeView findOne(int id) {
+    public EmployeeView findOne(int id) {//これもメソッドのオーバーロードだ
         Employee e = findOneInternal(id);
         return EmployeeConverter.toView(e);
     }
+
+    /**!!!!!!!!!あとで消すかも240119
+     * codeを条件にentityクラスから取得したデータをEmployeeViewのインスタンスにコンバートして返却する
+     * @param code
+     * @return 取得データのインスタンス
+     */
+    public EmployeeView findOne(String code) {//これもメソッドのオーバーロードだ
+
+        Employee e = null;
+        try {
+
+            // 社員番号を条件に従業員を1件取得する
+            e = em.createNamedQuery(JpaConst.Q_EMP_GET_BY_CODE,Employee.class)
+                    .setParameter(JpaConst.JPQL_PARM_CODE, code)
+                    .getSingleResult();
+        } catch (NoResultException ex){
+        }
+
+        return EmployeeConverter.toView(e);
+    }
+
 
     /**
      * 社員番号を条件に該当するデータの件数を取得し、返却する
@@ -223,7 +244,7 @@ public class EmployeeService extends ServiceBase {
     }
 
     /**
-     * idを条件にデータを1件取得し、Employeeのインスタンスで返却する
+     * idを条件にデータを（entityクラスから）1件取得し、Employeeのインスタンスで返却する
      * @param id
      * @return 取得データのインスタンス
      */
@@ -232,6 +253,7 @@ public class EmployeeService extends ServiceBase {
 
         return e;
     }
+
 
     /**
      * 従業員データを1件登録する

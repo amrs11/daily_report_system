@@ -41,7 +41,7 @@ public class TopAction extends ActionBase{
 
     public void index() throws ServletException, IOException{
 
-        //セッションからログイン中の従業員情報を取得
+        //セッションからログイン中の従業員情報を取得（ログインメソッドで置いている）
         EmployeeView loginEmployee = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
 
         //ログイン中の従業員が作成した日報データを指定されたページ数の一覧画面を表示する分取得する

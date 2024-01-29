@@ -27,7 +27,7 @@ import lombok.Setter;
  */
 
 @Table(name = JpaConst.TABLE_EMP)
-@NamedQueries({//全4つのSELECT文。指定した内容をDBから取得して一覧として表示される
+@NamedQueries({//SELECT文。指定した内容をDBから取得して一覧として表示される
     @NamedQuery(
             name = JpaConst.Q_EMP_GET_ALL,//クエリの名前。コントローラーのほうでメソッド名として指定する用
             query = JpaConst.Q_EMP_GET_ALL_DEF),//クエリの実行内容。JPQL。
@@ -39,7 +39,10 @@ import lombok.Setter;
             query = JpaConst.Q_EMP_COUNT_REGISTERED_BY_CODE_DEF),
     @NamedQuery(
             name = JpaConst.Q_EMP_GET_BY_CODE_AND_PASS,
-            query = JpaConst.Q_EMP_GET_BY_CODE_AND_PASS_DEF)
+            query = JpaConst.Q_EMP_GET_BY_CODE_AND_PASS_DEF),
+    @NamedQuery(
+            name = JpaConst.Q_EMP_GET_BY_CODE,
+            query = JpaConst.Q_EMP_GET_BY_CODE_DEF)
 })
 
 @Getter //全てのクラスフィールドについてgetterを自動生成する(Lombok) 便利なんだが
@@ -65,7 +68,7 @@ public class Employee {
      * 社員番号
      */
     @Column (name = JpaConst.EMP_COL_CODE,nullable = false , unique = true)
-    private String code;//なんでIntegerじゃないんだろう アルファベットとかが入る可能性もあるから？
+    private String code;//アルファベットとかが入る可能性もあるのでString
 
     /**
      * 氏名

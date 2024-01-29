@@ -162,3 +162,18 @@ pre {
 h3 {
     font-size: larger;
 }
+div#employee_search {
+    text-align: right;
+}
+
+table#emp_search_result th{
+    background-color:#eeeeee;
+}
+
+div #like_icon form{
+    display : inline;
+}
+
+div #like_icon form a {
+    color : black;
+}

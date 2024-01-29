@@ -7,6 +7,7 @@
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 <c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
+<c:set var="commSch" value="${ForwardConst.CMD_SEARCH.getValue()}" />
 
 <c:import url="../layout/app.jsp">
     <c:param name="content">
@@ -16,6 +17,15 @@
             </div>
         </c:if>
         <h2>従業員　一覧</h2>
+        <div id="employee_search">
+        <form method="POST" action="<c:url value='?action=${actEmp}&command=${commSch}' />">
+        <input type="text" name="${AttributeConst.EMP_CODE.getValue()}"  value="${code}" placeholder="社員番号を入力してください"/>&nbsp;
+        <input type="hidden" name="${AttributeConst.EMP_ID.getValue()}" value="${employee.id}" />
+        <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
+        <button type="submit">検索</button>
+        </form>
+        </div>
+
         <table id="employee_list">
             <tbody>
                 <tr>
@@ -24,7 +34,7 @@
                     <th>操作</th>
                 </tr>
                 <c:forEach var="employee" items="${employees}" varStatus="status">
-                    <tr class="row${status.count % 2}">
+                    <tr class="row${status.count % 2}"><%-- status.countで奇数と偶数を交互に剰余演算して0と1を繰り返し、cssでrow0,row1の背景色指定で行ごとに色付け --%>
                         <td><c:out value="${employee.code}" /></td>
                         <td><c:out value="${employee.name}" /></td>
                         <td>

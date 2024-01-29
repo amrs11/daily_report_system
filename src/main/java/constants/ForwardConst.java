@@ -26,6 +26,7 @@ public enum ForwardConst {
     CMD_EDIT("edit"),
     CMD_UPDATE("update"),
     CMD_DESTROY("destroy"),
+    CMD_SEARCH("search"),//あとで消すかも！！！！！240119
 
     //jsp
     FW_ERR_UNKNOWN("error/unknown"),
@@ -33,6 +34,9 @@ public enum ForwardConst {
     FW_LOGIN("login/login"),
     FW_EMP_INDEX("employees/index"),
     FW_EMP_SHOW("employees/show"),
+
+    FW_EMP_SEARCH("employees/search"),//あとで消すかも！！！！！240119
+
     FW_EMP_NEW("employees/new"),
     FW_EMP_EDIT("employees/edit"),
     FW_REP_INDEX("reports/index"),

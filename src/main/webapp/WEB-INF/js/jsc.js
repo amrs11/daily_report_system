@@ -1,0 +1,8 @@
+/**
+ *
+ */
+
+  $(function(){
+      $("table").colResizable();
+  });
+

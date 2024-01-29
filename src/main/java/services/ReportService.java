@@ -30,7 +30,7 @@ public class ReportService extends ServiceBase{
 
         List<Report> reports = em.createNamedQuery(JpaConst.Q_REP_GET_ALL_MINE, Report.class)
                 .setParameter(JpaConst.JPQL_PARM_EMPLOYEE, EmployeeConverter.toModel(employee))
-                .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))//DBの、日報のprimary key（id）の何番目から取得するか、というSQL文
+                .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))//DTOの、日報のprimary key（id）の何番目から取得するか、というSQL文（例：1ページに最大15件表示する場合は、3ページ目を指定すると、15*（3-1）なのでid30番目から表示させる）
                 .setMaxResults(JpaConst.ROW_PER_PAGE)//↑で指定したところから、最大何件まで取得するか、というSQL文
                 .getResultList();//取得した指定分のデータをリストにする
         return ReportConverter.toViewList(reports);

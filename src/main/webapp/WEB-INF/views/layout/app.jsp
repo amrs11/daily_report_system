@@ -19,6 +19,17 @@
                 <title><c:out value="日報管理システム" /></title> <%-- なんでc:out？？？ --%>
         <link rel="stylesheet" href="<c:url value='/css/reset.css' />">
         <link rel="stylesheet" href="<c:url value='/css/style.css' />">
+        <link href="https://use.fontawesome.com/releases/v6.5.0/css/all.css" rel="stylesheet">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/colresizable/1.6.0/colResizable-1.6.min.js"></script>
+<script>
+  $(function(){
+    $("table").colResizable();
+  });
+</script>
+
     </head>
     <body>
         <div id="wrapper">
@@ -43,5 +54,7 @@
             <div id="content">${param.content}</div>
             <div id="footer">by Taro Kirameki.</div>
         </div>
+
+
     </body>
 </html>

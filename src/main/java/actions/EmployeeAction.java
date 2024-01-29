@@ -69,6 +69,27 @@ public class EmployeeAction extends ActionBase {
         }
 
     }
+
+    /**!!!!!!!!!!!!!!あとで消すかも240119
+     * 社員番号を元に検索した従業員を表示する
+     */
+
+    public void search() throws ServletException,IOException{
+        //管理者かどうかのチェック
+        if(checkAdmin()) {
+
+            //codeを条件に従業員データを取得する
+            EmployeeView ev = service.findOne(getRequestParam(AttributeConst.EMP_CODE));
+
+            putRequestScope(AttributeConst.EMPLOYEE,ev);//jspがをEL式でデータを取得できるように、evを"employee"にセットしてリクエストスコープに置く
+
+            //検索結果を表示
+            forward(ForwardConst.FW_EMP_SEARCH);
+
+        }
+    }
+
+
     /**
      * 新規登録画面を表示する（画面の表示だけ）
      * @throws ServletException
@@ -150,7 +171,7 @@ public class EmployeeAction extends ActionBase {
             //管理者かどうかのチェック
             if(checkAdmin()) {
 
-            //idを条件に従業員データを取得する(em.find()→service.findInternal()→service.findOne()→リクエストパラメータから取得)
+            //idを条件に従業員データを取得する(→リクエストパラメータの"id="が引数→em.find()→service.findInternal()→service.findOne()から取得)
             EmployeeView ev = service.findOne(toNumber(getRequestParam(AttributeConst.EMP_ID)));
 
             if(ev == null || ev.getDeleteFlag() == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()) {
