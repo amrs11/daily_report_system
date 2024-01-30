@@ -59,7 +59,7 @@
                  </form><c:out value="${likes_count}" />
          </c:if>
          </div>
-                         <div id="like_icon2">
+                <div id="like_icon2">
          <c:if test="${sessionScope.login_employee.id != report.employee.id && sessionScope.like_check == false}">
                  <form method="post" name="form1" action="<c:url value='?action=${actRep}&command=${commLikeC}' />">
                          <input type="hidden" name="${AttributeConst.REP_ID.getValue()}" value="${report.id}" />
