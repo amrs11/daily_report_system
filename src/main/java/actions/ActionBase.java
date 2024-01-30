@@ -115,6 +115,8 @@ public abstract class ActionBase {
         response.sendRedirect(redirectUrl);
         }
 
+
+
     /**
      * CSRF対策 token不正の場合はエラー画面を表示
      * @return true: token有効 false: token不正

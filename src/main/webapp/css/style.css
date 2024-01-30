@@ -177,3 +177,10 @@ div #like_icon form{
 div #like_icon form a {
     color : black;
 }
+div #like_icon2 form{
+    display : inline;
+}
+
+div #like_icon2 form a {
+    color : black;
+}

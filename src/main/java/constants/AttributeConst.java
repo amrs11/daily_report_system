@@ -48,7 +48,11 @@ public enum AttributeConst {
     REP_ID("id"),
     REP_DATE("report_date"),
     REP_TITLE("title"),
-    REP_CONTENT("content_msg");
+    REP_CONTENT("content_msg"),
+
+    //いいね管理
+    LIKE_COUNT("likes_count"),
+    LIKE_CHECK("like_check");
 
     // フィールドの定義
     private final String text;

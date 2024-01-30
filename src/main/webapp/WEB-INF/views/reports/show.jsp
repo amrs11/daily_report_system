@@ -2,10 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="constants.ForwardConst" %>
+<%@ page import="constants.AttributeConst" %>>
 
 <c:set var="actRep" value="${ForwardConst.ACT_REP.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commEdt" value="${ForwardConst.CMD_EDIT.getValue()}" />
+<c:set var="commLikeC" value="${ForwardConst.CMD_LIKE_CREATE.getValue()}" />
+<c:set var="commLikeD" value="${ForwardConst.CMD_LIKE_DESTROY.getValue()}"/>
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
@@ -41,18 +44,28 @@
         </table>
 
         <c:if test="${sessionScope.login_employee.id == report.employee.id}">
-            <i class="fa-regular fa-star fa-lg"></i><%-- とりあえずテスト用240125 --%>&nbsp;<c:out value="${reports_count}" />
+            <i class="fa-regular fa-star fa-lg"></i>&nbsp;<c:out value="${likes_count}" />
 
          <p>
             <a href="<c:url value='?action=${actRep}&command=${commEdt}&id=${report.id}' />">この日報を編集する</a>
          </p>
          </c:if>
                 <div id="like_icon">
-         <c:if test="${sessionScope.login_employee.id != report.employee.id}">
-                 <form method="post" name="form1" action="?action=${actRep}&command=${commEdt}&id=${report.id}" >
-                         <input type="hidden" name="user_name" value="名前"><a href="javascript:form1.submit()"><i class="fa-solid fa-star fa-lg"></i></a>
-                 </form><c:out value="${reports_count}" />
-            <%-- とりあえずテスト用240125 --%>
+         <c:if test="${sessionScope.login_employee.id != report.employee.id && sessionScope.like_check == true}">
+                 <form method="post" name="form1" action="<c:url value='?action=${actRep}&command=${commLikeD}' />">
+                         <input type="hidden" name="${AttributeConst.REP_ID.getValue()}" value="${report.id}" />
+                         <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
+                         <a href="javascript:form1.submit()"><i class="fa-solid fa-star fa-lg"></i></a>
+                 </form><c:out value="${likes_count}" />
+         </c:if>
+         </div>
+                         <div id="like_icon2">
+         <c:if test="${sessionScope.login_employee.id != report.employee.id && sessionScope.like_check == false}">
+                 <form method="post" name="form1" action="<c:url value='?action=${actRep}&command=${commLikeC}' />">
+                         <input type="hidden" name="${AttributeConst.REP_ID.getValue()}" value="${report.id}" />
+                         <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
+                         <a href="javascript:form1.submit()"><i class="fa-regular fa-star fa-lg"></i></a>
+                 </form><c:out value="${likes_count}" />
          </c:if>
          </div>
 

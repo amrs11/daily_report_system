@@ -27,6 +27,8 @@ public enum ForwardConst {
     CMD_UPDATE("update"),
     CMD_DESTROY("destroy"),
     CMD_SEARCH("search"),//あとで消すかも！！！！！240119
+    CMD_LIKE_CREATE("likeCreate"),//あとで消すかも！！！！！240119
+    CMD_LIKE_DESTROY("likeDestroy"),
 
     //jsp
     FW_ERR_UNKNOWN("error/unknown"),

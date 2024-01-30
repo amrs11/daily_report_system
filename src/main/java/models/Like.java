@@ -69,7 +69,7 @@ public class Like {
      * 登録日時
      */
     @Column(name = JpaConst.LIKE_COL_CREATED_AT)
-    private LocalDateTime createdAt;
+    private LocalDateTime created_at;
 
 
 }

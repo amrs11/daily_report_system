@@ -3,11 +3,15 @@ package services;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import actions.views.EmployeeConverter;
 import actions.views.EmployeeView;
 import actions.views.ReportConverter;
 import actions.views.ReportView;
 import constants.JpaConst;
+import models.Employee;
+import models.Like;
 import models.Report;
 import models.validators.ReportValidator;
 
@@ -148,6 +152,72 @@ public class ReportService extends ServiceBase{
         ReportConverter.copyViewToModel(r, rv);//rv(画面で入力した日報内容)をr（findOneInternalで取得した、DBの元々の日報に上書き）
         em.getTransaction().commit();
     }
+    /**
+     * ログイン従業員idとshow画面の日報idを条件にいいね登録を検索する
+     * @param employee ログイン従業員
+     * @param report いいね対象の日報
+     */
+
+    public Like likeFind(Employee employee,Report report) {
+        Like l = null;
+        try {
+
+            // ログインしている従業員idと詳細を開いた日報を条件に1件取得する
+            l = em.createNamedQuery(JpaConst.Q_LIKE_GET_BY_EMP_AND_REP,Like.class)
+                    .setParameter(JpaConst.JPQL_PARM_EMPLOYEE, employee)
+                    .setParameter(JpaConst.JPQL_PARM_REPORT,report)
+                    .getSingleResult();
+        } catch (NoResultException ex){
+        }
+        return l ;//DBから取得した情報を返却
 
 
+}
+    /** employee_idとreport_idを条件に検索し、データが取得できるかどうかで認証結果を返却する
+     * @param employee_id ログイン従業員
+     * @param report_id showで開いた日報
+     * @return 認証結果を返却す(成功:true 失敗:false)
+     */
+   public Boolean isLiked(Employee employee,Report report) {
+
+       boolean isLiked = false; //そもそもはfalseを返すようにする
+           Like l = likeFind(employee, report);//パラメータを元にDBからデータを検索してlにセット
+
+           if (l != null && l.getId() != null) {//lの中身が空でない（引数と同じ内容のレコードを持ったLikeがDBに存在する）か確認
+
+               //データが取得できた場合、認証成功
+               isLiked = true;//認証できたときにtrueを返すようにする
+           }
+
+       //認証結果を返却する
+       return isLiked;
+   }
+
+   /**
+    * 指定した日報のいいね件数を取得し、返却する
+    * @param report
+    * @return その日報のいいねの件数
+    */
+   public long countAllMine(Report report) {//引数に指定する日報をセット
+
+       long count = (long)em.createNamedQuery(JpaConst.Q_LIKE_COUNT_ALL_MINE,Long.class)
+               .setParameter(JpaConst.JPQL_PARM_REPORT,report)
+               .getSingleResult();
+       return count;
+
+   }
+
+   public void likeCreate(Like l) {
+       LocalDateTime ldt = LocalDateTime.now();
+       l.setCreated_at(ldt);
+       em.getTransaction().begin();
+       em.persist(l);//persist=永続化=DBにレコードとして保存
+       em.getTransaction().commit();
+}
+
+   public void likeDestroy(Like l) {
+       em.getTransaction().begin();
+       em.remove(l);       // データ削除
+       em.getTransaction().commit();
+   }
 }

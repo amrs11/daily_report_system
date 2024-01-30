@@ -6,12 +6,17 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 
+import actions.views.EmployeeConverter;
 import actions.views.EmployeeView;
+import actions.views.ReportConverter;
 import actions.views.ReportView;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
 import constants.MessageConst;
+import models.Employee;
+import models.Like;
+import models.Report;
 import services.ReportService;
 
 /**
@@ -117,6 +122,7 @@ public class ReportAction extends ActionBase {
                     null,
                     null);
 
+
             //日報情報登録
             List<String> errors = service.create(rv);
 
@@ -157,18 +163,26 @@ public class ReportAction extends ActionBase {
                 forward(ForwardConst.FW_ERR_UNKNOWN);
 
             } else {
-
+                putRequestScope(AttributeConst.TOKEN,getTokenId());
                 putRequestScope(AttributeConst.REPORT,rv);//取得したデータをJSPに渡す
             }
-            //とりあえずテスト用↓ 240125
 
-            //セッションからログイン中の従業員情報を取得（ログインメソッドで置いている）
-            EmployeeView loginEmployee = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
+            //テスト用↓ 240125
 
-            //ログイン中の従業員が作成した日報データの件数を取得
-            long myReportCount = service.countAllMine(loginEmployee);
+            //↑で取得したReportView型の日報情報をReport型にコンバート（LikeのDTO照会のため型をReportにする必要がある）
+            Report r = ReportConverter.toModel(rv);
 
-            putRequestScope(AttributeConst.REP_COUNT,myReportCount);//ログイン中の従業員が作成した日報の数
+            EmployeeView ev = (EmployeeView)getSessionScope(AttributeConst.LOGIN_EMP);
+            Employee e =EmployeeConverter.toModel(ev);
+
+            //その日報にすでにいいねしているか検索した結果をLikeアイコンのリンクを分岐させるためにShowビューに渡す
+            Boolean lc = service.isLiked(e, r);
+            putSessionScope(AttributeConst.LIKE_CHECK,lc);
+
+            //その日報のいいねデータの件数を取得
+            long likeCount = service.countAllMine(r);
+
+            putRequestScope(AttributeConst.LIKE_COUNT,likeCount);//日報のいいね数
 
             //ここまでテスト↑
 
@@ -253,4 +267,66 @@ public class ReportAction extends ActionBase {
             }
 
 }
+
+        /**
+         * いいねする
+         * @throws ServletException
+         * @throws IOException
+         */
+
+        public void likeCreate() throws ServletException,IOException{
+            if(checkToken()){
+
+                //日報idを条件に日報データを取得する
+                ReportView rv= service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
+                //↑で取得したReportView型の日報情報をReport型にコンバート
+                Report r = ReportConverter.toModel(rv);
+
+                //ログイン従業員（いいねする人）の情報も取得してEmployee型にコンバート
+                EmployeeView ev = (EmployeeView)getSessionScope(AttributeConst.LOGIN_EMP);
+                Employee e =EmployeeConverter.toModel(ev);
+
+
+                //DTOモデルのLike経由でDBにいいね情報を登録
+                Like l = new Like(
+                null,
+                e,
+                r,
+                null);
+
+            service.likeCreate(l);
+
+            //日報のshowビューにリダイレクト
+            response.sendRedirect(request.getContextPath() + "?action=" + ForwardConst.ACT_REP.getValue() + "&command=" + ForwardConst.CMD_SHOW.getValue() +"&id=" + rv.getId());
+
+
+    }
+        }
+            /**
+             * いいねを解除する
+             * @throws ServletException
+             * @throws IOException
+             */
+            public void likeDestroy() throws ServletException,IOException{
+                if(checkToken()){
+                //日報idを条件に日報データを取得する
+                ReportView rv= service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
+                //↑で取得したReportView型の日報情報をReport型にコンバート
+                Report r = ReportConverter.toModel(rv);
+
+                //ログイン従業員（いいねする人）の情報も取得してEmployee型にコンバート
+                EmployeeView ev = (EmployeeView)getSessionScope(AttributeConst.LOGIN_EMP);
+                Employee e =EmployeeConverter.toModel(ev);
+
+                Like l = service.likeFind(e, r);
+
+                service.likeDestroy(l);
+
+              //日報のshowビューにリダイレクト
+                response.sendRedirect(request.getContextPath() + "?action=" + ForwardConst.ACT_REP.getValue() + "&command=" + ForwardConst.CMD_SHOW.getValue() +"&id=" + rv.getId());
+
+                }
+
+            }
+
         }
