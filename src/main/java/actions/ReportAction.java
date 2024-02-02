@@ -167,7 +167,6 @@ public class ReportAction extends ActionBase {
                 putRequestScope(AttributeConst.REPORT,rv);//取得したデータをJSPに渡す
             }
 
-            //テスト用↓ 240125
 
             //↑で取得したReportView型の日報情報をReport型にコンバート（LikeのDTO照会のため型をReportにする必要がある）
             Report r = ReportConverter.toModel(rv);
@@ -177,14 +176,13 @@ public class ReportAction extends ActionBase {
 
             //その日報にすでにいいねしているか検索した結果をLikeアイコンのリンクを分岐させるためにShowビューに渡す
             Boolean lc = service.isLiked(e, r);
-            putSessionScope(AttributeConst.LIKE_CHECK,lc);
+            putRequestScope(AttributeConst.LIKE_CHECK,lc);
 
             //その日報のいいねデータの件数を取得
             long likeCount = service.countAllMine(r);
 
             putRequestScope(AttributeConst.LIKE_COUNT,likeCount);//日報のいいね数
 
-            //ここまでテスト↑
 
                 //詳細画面を表示
                 forward(ForwardConst.FW_REP_SHOW);

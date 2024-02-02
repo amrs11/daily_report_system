@@ -51,7 +51,7 @@
          </p>
          </c:if>
                 <div id="like_icon">
-         <c:if test="${sessionScope.login_employee.id != report.employee.id && sessionScope.like_check == true}">
+         <c:if test="${sessionScope.login_employee.id != report.employee.id && like_check == true}">
                  <form method="post" name="form1" action="<c:url value='?action=${actRep}&command=${commLikeD}' />">
                          <input type="hidden" name="${AttributeConst.REP_ID.getValue()}" value="${report.id}" />
                          <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
@@ -60,7 +60,7 @@
          </c:if>
          </div>
                 <div id="like_icon2">
-         <c:if test="${sessionScope.login_employee.id != report.employee.id && sessionScope.like_check == false}">
+         <c:if test="${sessionScope.login_employee.id != report.employee.id && like_check == false}">
                  <form method="post" name="form1" action="<c:url value='?action=${actRep}&command=${commLikeC}' />">
                          <input type="hidden" name="${AttributeConst.REP_ID.getValue()}" value="${report.id}" />
                          <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
